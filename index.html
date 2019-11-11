@@ -228,6 +228,8 @@ map.on('load', function () {
 
   //the existing pipeline Data in the past 2012 - 2019
   //2012
+  //show the not in pipeline parcels:
+  // Potential parcels not in pipeline
   var firstSymbolId1;
   for (var i = 0; i < layers.length; i++) {
     if (layers[i].type === 'symbol') {
@@ -235,64 +237,113 @@ map.on('load', function () {
       break;
       }
     }
+
   map.addLayer({
-      'id': '2012 Q1 Pipeline',
-      'type': 'circle',
+      'id': 'Potential parcels not in pipeline',
+      'type': 'line',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202012%20Q1.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NO_RESI_OPSP_CIE_L4000SQFT1.geojson?token=AFTLPOUJBNTECJA5KQLPLMC52IXOE'
       },
 
       'layout': {
           'visibility': 'none'
       },
       'paint': {
-        'circle-radius': 6,
-        'circle-color': '#fae8c8'
+          // 'fill-color': 'rgba(87, 94, 98, 0.6)',
+          // 'fill-outline-color': 'rgba(36, 68, 89, 1)'
 
+          // '#5DADE2',
+          // 'fill-opacity': 0.05,
+
+          'line-color': '#5DADE2',
+          'line-width': 1.5
       },
-  }, firstSymbolId1);
+  },
+  firstSymbolId1);
 
-  //add popup to the model 1 prediction parcels
-  map.on('click', '2012 Q1 Pipeline', function(e) {
+
+  map.on('click', 'Potential parcels not in pipeline', function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
-        "<strong>2012 Q1</strong>"
-        + "<br>"
-        + "<br>"
-        + "Block-lot number: "
+        "District: "
         + "<strong>"
-        + e.features[0].properties.block_lot
+        + e.features[0].properties.supervisor
         + "</strong>"
         + "<br>"
-        + "Address: "
+        + "Name: "
         + "<strong>"
-        + e.features[0].properties.location_1_address
-        + "</strong>"
-        + "<br>"
-        + "Zoning: "
-        + "<strong>"
-        + e.features[0].properties.zoning
-        + "</strong>"
-        + "<br>"
-        + "Land Use: "
-        + "<strong>"
-        + e.features[0].properties.landuse
-        + "</strong>"
-        + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.project_date.substr(0,10)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
-        + "</strong>"
-      )
+        + e.features[0].properties.supname)
       .addTo(map);
   });
+
+
+  // var firstSymbolId1;
+  // for (var i = 0; i < layers.length; i++) {
+  //   if (layers[i].type === 'symbol') {
+  //     firstSymbolId1 = layers[i].id;
+  //     break;
+  //     }
+  //   }
+  // map.addLayer({
+  //     'id': '2012 Q1 Pipeline',
+  //     'type': 'circle',
+  //     'source': {
+  //           'type': 'geojson',
+  //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202012%20Q1.geojson'
+  //     },
+  //
+  //     'layout': {
+  //         'visibility': 'none'
+  //     },
+  //     'paint': {
+  //       'circle-radius': 6,
+  //       'circle-color': '#fae8c8'
+  //
+  //     },
+  // }, firstSymbolId1);
+  //
+  // //add popup to the model 1 prediction parcels
+  // map.on('click', '2012 Q1 Pipeline', function(e) {
+  //   new mapboxgl.Popup()
+  //     .setLngLat(e.lngLat)
+  //     .setHTML(
+  //       "<strong>2012 Q1</strong>"
+  //       + "<br>"
+  //       + "<br>"
+  //       + "Block-lot number: "
+  //       + "<strong>"
+  //       + e.features[0].properties.block_lot
+  //       + "</strong>"
+  //       + "<br>"
+  //       + "Address: "
+  //       + "<strong>"
+  //       + e.features[0].properties.location_1_address
+  //       + "</strong>"
+  //       + "<br>"
+  //       + "Zoning: "
+  //       + "<strong>"
+  //       + e.features[0].properties.zoning
+  //       + "</strong>"
+  //       + "<br>"
+  //       + "Land Use: "
+  //       + "<strong>"
+  //       + e.features[0].properties.landuse
+  //       + "</strong>"
+  //       + "<br>"
+  //       + "Project Date: "
+  //       + "<strong>"
+  //       + e.features[0].properties.project_date.substr(0,10)
+  //       + "</strong>"
+  //       + "<br>"
+  //       + "Height Limit: "
+  //       + "<strong>"
+  //       + e.features[0].properties.heightlimit
+  //       + "</strong>"
+  //     )
+  //     .addTo(map);
+  // });
 
 
   //2014
@@ -897,6 +948,13 @@ map.on('load', function () {
           .addTo(map);
       });
 
+
+
+
+
+
+
+
     var firstSymbolId9;
     for (var i = 0; i < layers.length; i++) {
       if (layers[i].type === 'symbol') {
@@ -1095,16 +1153,17 @@ var toggleableLayerIds =
   [
     '',
     // 'Pipeline Dataset',
-    '2012 Q1 Pipeline',
-    '2014 Q1 Pipeline',
-    '2016 Q1 Pipeline',
-    '2018 Q1 Pipeline',
-    '2019 Q1 Pipeline',
+    'Potential parcels not in pipeline',
+    // '2012 Q1 Pipeline',
+    // '2014 Q1 Pipeline',
+    // '2016 Q1 Pipeline',
+    // '2018 Q1 Pipeline',
+    // '2019 Q1 Pipeline',
     '',
 
    // Model Prediction
     'Model 1: Pipeline Data',
-    'Model 2: Proximity Data',
+    // 'Model 2: Proximity Data',
     // 'Model 3: Prediction 2050 - No Zoning',
     // 'Pipeline Data',
     '',
