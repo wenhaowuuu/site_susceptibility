@@ -6,6 +6,14 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css'/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -27,6 +35,7 @@
             background-color: salmon;
         }
     </style>
+
 </head>
 <body>
 
@@ -99,6 +108,32 @@
       top:20px;
       left:0;
       right:0;
+      z-index:0;
+    }
+
+    .dropdown{
+      position:fixed;
+      top:20px;
+      left:10px;
+      z-index:100;
+    }
+
+    .calculation-box {
+        height: 75px;
+        width: 150px;
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, .9);
+        padding: 15px;
+        text-align: center;
+        z-index:100;
+    }
+
+    p {
+        font-family: 'Open Sans';
+        margin: 0;
+        font-size: 13px;
     }
 
     h2,h3 {
@@ -157,7 +192,38 @@ font-weight: bolder;">
      Parcel Development Susceptibility Explorer
 </div>
 
-<!-- <div style="z-index:20;"> SOM | Year One Machine Learning Group Research </div> -->
+<!-- Example split danger button -->
+<!-- <div class="btn-group">
+  <button type="button" class="btn btn-danger">Land use</button>
+  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Retail</a>
+    <a class="dropdown-item" href="#">Industrial</a>
+    <a class="dropdown-item" href="#">Other</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div>
+</div> -->
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Land Use
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Residential</a>
+    <a class="dropdown-item" href="#">Industrial</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+
+
+
+
+
+
+
 
 <nav id="menu"></nav>
 
@@ -166,6 +232,11 @@ font-weight: bolder;">
 <div class='map-overlay' id='features'><h4><h3>Year One Machine Learning Map</h3> <h4>&nbsp Parcel Development Susceptibility</h4>
 <div id='pd'><p>This map visualizes properties predicted to be susceptible to future re-development in San Francisco. The two models were trained against the last decade of development pipeline data.</p></div></div> -->
 <div class='map-overlay' id='legend'></div>
+
+<div class='calculation-box'>
+    <p>Draw a polygon using the draw tools.</p>
+    <div id='calculated-area'></div>
+</div>
 
 <!-- <div id="map0"></div> -->
 
@@ -193,35 +264,7 @@ var map = new mapboxgl.Map({
 });
 
 
-
-//THIS FOLLOWING CODE CREATE PROBLEM FOR RENDERING THE TOGGLE BUTTONS:
-// $('#remover').click(function(){
-//   $('#map').hide();
-//   $('#map0').show();
-//   // L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png', {
-//   //   maxZoom: 18,
-//   //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>',
-//   //   subdomains: 'abcd'
-//   // }).addTo(map);
-// });
-
-
 map.on('load', function () {
-  //add the satellite layer control
-  // var switchy = document.getElementById('remover');
-  //   switchy.addEventListener("click", function(){
-  //       switchy = document.getElementById('remover');
-  //       if (switchy.className === 'on') {
-  //           switchy.setAttribute('class', 'off');
-  //           map.setLayoutProperty('satellite-v9', 'visibility', 'none');
-  //           switchy.innerHTML = 'Add satellite';
-  //       } else {
-  //           switchy.setAttribute('class', 'on');
-  //           map.setLayoutProperty('satellite-v9', 'visibility', 'visible');
-  //           switchy.innerHTML = 'Remove satellite';
-  //       }
-  //   });
-
   //put the layers beneath the symbols
   //reference: https://docs.mapbox.com/mapbox-gl-js/example/geojson-layer-in-stack/
   var layers = map.getStyle().layers;
@@ -256,7 +299,7 @@ map.on('load', function () {
           // '#5DADE2',
           // 'fill-opacity': 0.05,
 
-          'line-color': '#5DADE2',
+          'line-color': '#56AD00',
           'line-width': 1.5
       },
   },
@@ -267,83 +310,21 @@ map.on('load', function () {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
-        "District: "
+        "Parcel id: "
         + "<strong>"
-        + e.features[0].properties.supervisor
+        + e.features[0].properties.mapblklot
         + "</strong>"
         + "<br>"
-        + "Name: "
+        + "Built year: "
         + "<strong>"
-        + e.features[0].properties.supname)
+        + e.features[0].properties.yrbuilt
+        + "</strong>"
+        +"<br>"
+        + "Use: "
+        + e.features[0].properties.landuse
+        + "</strong>")
       .addTo(map);
   });
-
-
-  // var firstSymbolId1;
-  // for (var i = 0; i < layers.length; i++) {
-  //   if (layers[i].type === 'symbol') {
-  //     firstSymbolId1 = layers[i].id;
-  //     break;
-  //     }
-  //   }
-  // map.addLayer({
-  //     'id': '2012 Q1 Pipeline',
-  //     'type': 'circle',
-  //     'source': {
-  //           'type': 'geojson',
-  //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202012%20Q1.geojson'
-  //     },
-  //
-  //     'layout': {
-  //         'visibility': 'none'
-  //     },
-  //     'paint': {
-  //       'circle-radius': 6,
-  //       'circle-color': '#fae8c8'
-  //
-  //     },
-  // }, firstSymbolId1);
-  //
-  // //add popup to the model 1 prediction parcels
-  // map.on('click', '2012 Q1 Pipeline', function(e) {
-  //   new mapboxgl.Popup()
-  //     .setLngLat(e.lngLat)
-  //     .setHTML(
-  //       "<strong>2012 Q1</strong>"
-  //       + "<br>"
-  //       + "<br>"
-  //       + "Block-lot number: "
-  //       + "<strong>"
-  //       + e.features[0].properties.block_lot
-  //       + "</strong>"
-  //       + "<br>"
-  //       + "Address: "
-  //       + "<strong>"
-  //       + e.features[0].properties.location_1_address
-  //       + "</strong>"
-  //       + "<br>"
-  //       + "Zoning: "
-  //       + "<strong>"
-  //       + e.features[0].properties.zoning
-  //       + "</strong>"
-  //       + "<br>"
-  //       + "Land Use: "
-  //       + "<strong>"
-  //       + e.features[0].properties.landuse
-  //       + "</strong>"
-  //       + "<br>"
-  //       + "Project Date: "
-  //       + "<strong>"
-  //       + e.features[0].properties.project_date.substr(0,10)
-  //       + "</strong>"
-  //       + "<br>"
-  //       + "Height Limit: "
-  //       + "<strong>"
-  //       + e.features[0].properties.heightlimit
-  //       + "</strong>"
-  //     )
-  //     .addTo(map);
-  // });
 
 
   //2014
@@ -618,11 +599,6 @@ map.on('load', function () {
   });
 
 
-
-
-
-
-
     // Change the cursor to a pointer when the mouse is over the states layer.
     map.on('mouseenter', 'states-layer', function () {
       map.getCanvas().style.cursor = 'pointer';
@@ -632,104 +608,6 @@ map.on('load', function () {
     map.on('mouseleave', 'states-layer', function () {
       map.getCanvas().style.cursor = '';
     });
-
-
-
-
-
-    //ADD THE SOM DESIGNED BUILDINGS IN SF DOWNTOWN
-    // var SOM_url = "https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190730_SOM_BLDG_SFDT.geojson";
-    // $(document).ready(function() {
-    //           $.ajax(SOM_url).done(function(data) {
-    //             var parsedadptdata = JSON.parse(data);
-    //             console.log("SOM towers parsed");
-    //             var layerMappedMarkers = L.geoJson(parsedadptdata,
-    //               {
-    //                 pointToLayer: function (feature, latlng) {
-    //                   return new L.Marker(latlng, {
-    //                     icon:
-    //                         new L.icon({
-    //                         iconUrl: 'https://raw.githubusercontent.com/wenhaowuuu/houseplusmap/master/house-icon-s.png',
-    //                         // iconUrl: 'https://image.ibb.co/h1dYFk/city_icons_01.png',
-    //                         iconSize:     [15, 15],
-    //                         shadowSize:   [10, 10],
-    //                         iconAnchor:   [20, 20],
-    //                     })
-    //                   })
-    //
-    //                   // .bindTooltip(feature.properties.Name + ': ' + feature.properties.Designatio);
-    //
-    //                   .bindTooltip(
-    //                                "<b>Name: </b>" +
-    //                                feature.properties.Project_Na +
-    //                                "</br>" +
-    //
-    //                                "<b>Year: </b>" +
-    //                                feature.properties.Year +
-    //                                "</br>"
-    //
-    //                              ).bindPopup(
-    //                                "<b>Name: </b>" +
-    //                                feature.properties.Project_Na +
-    //                                "</br>" +
-    //
-    //                                "</br><a class='btn btn-light my-2 my-sm-0' style='font-size:12px;' href='https://www.cityofpaloalto.org/civicax/filebank/documents/8700';return true;'>Learn more</a>"
-    //
-    //                              );
-    //
-    //               }
-    //             }).addTo(map);
-    //           });
-    //       // });
-    //
-    //
-    //     }
-    //   );
-
-
-    // map.addLayer({
-    //     'id': 'SOM Towers',
-    //     'type': 'symbol',
-    //     'source': {
-    //           'type': 'geojson',
-    //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190730_SOM_BLDG_SFDT.geojson',
-    //           'properties': {
-    //             'marker-color': '#3bb2d0',
-    //             'marker-size': 'large',
-    //             'marker-symbol': 'rocket'
-    //           }
-    //     },
-    //
-    //     'layout': {
-    //         'visibility': 'visible'
-    //     }
-    //     // 'paint': {
-    //     //     'line-color': '#5DADE2',
-    //     //     'line-width': 1.5
-    //     // },
-    // });
-
-    // map.on('click', 'SOM Towers', function(e) {
-    //   new mapboxgl.Popup()
-    //     .setLngLat(e.lngLat)
-    //     .setHTML(
-    //       "District: "
-    //       + "<strong>"
-    //       + e.features[0].properties.Project_Na
-    //       + "</strong>"
-    //       + "<br>"
-    //       + "Year: "
-    //       + "<strong>"
-    //       + e.features[0].properties.Year
-    //       + "<br>"
-    //       + "Awards: "
-    //       + "<strong>"
-    //       + e.features[0].properties.Awards
-    //       + "</strong>"
-    //     )
-    //     .addTo(map);
-    // });
-
 
 
     //add the M1 predicted YES parcels based on Logistic Regression algorithm:
@@ -861,43 +739,6 @@ map.on('load', function () {
           // 'source-layer': 'museum-cusco'
       }, firstSymbolId8);
 
-
-      // map.addLayer({
-      //     'id': 'Pipeline Data',
-      //     'type': 'fill',
-      //     'source': {
-      //           'type': 'geojson',
-      //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/Current%20Supervisor%20Districts.geojson'
-      //     },
-      //
-      //     'layout': {
-      //         'visibility': 'visible'
-      //     },
-      //     'paint': {
-      //       'fill-color': '#5DADE2',
-      //       'fill-opacity': 0.1
-      //     },
-      //
-      // });
-
-      // map.addLayer({
-      //     'id': 'Supervisor District',
-      //     'type': 'line',
-      //     'source': {
-      //           'type': 'geojson',
-      //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/Current%20Supervisor%20Districts.geojson'
-      //     },
-      //
-      //     'layout': {
-      //         'visibility': 'none'
-      //     },
-      //     'paint': {
-      //         // 'fill-color': '#5DADE2',
-      //         // 'fill-opacity': 0.1,
-      //         'line-color': '#5DADE2',
-      //         'line-width': 1.5
-      //     },
-      // });
 
       var firstSymbolId7;
       for (var i = 0; i < layers.length; i++) {
@@ -1073,80 +914,6 @@ map.on('load', function () {
     }
 
 
-
-
-
-    // Seems that any data larger than 1MB cannot be hosted directly from Github and thus, you can not render them on the webpage.
-
-    // var firstSymbolId2;
-    // for (var i = 0; i < layers.length; i++) {
-    //   if (layers[i].type === 'symbol') {
-    //     firstSymbolId2 = layers[i].id;
-    //     break;
-    //     }
-    //   }
-    // map.addLayer({
-    //     'id': 'Zoned as Residential',
-    //     'type': 'line',
-    //     'source': {
-    //           'type': 'geojson',
-    //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190726_ZONING_RESIDENTIAL.geojson'
-    //     },
-    //
-    //     'layout': {
-    //         'visibility': 'visible'
-    //     },
-    //     'paint': {
-    //         'fill-color': '#F4E616',
-    //         'fill-opacity': 0.5
-    //         // 'line-color': '#5DADE2',
-    //         // 'line-width': 1.5
-    //     },
-    // }, firstSymbolId2);
-
-    // map.addLayer({
-    //     'id': 'Flickr Density',
-    //     'type': 'line',
-    //     'source': {
-    //           'type': 'geojson',
-    //           'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190726_FLICKR_DATA_GREATERTHAN1.geojson'
-    //     },
-    //
-    //     'layout': {
-    //         'visibility': 'visible'
-    //     },
-    //     'paint': {
-    //         'fill-color': '#ffffE2',
-    //         'fill-opacity': 0.7,
-    //         // 'line-color': '#5DADE2',
-    //         // 'line-width': 1.5
-    //     },
-    // });
-
-
-
-
-    // map.addSource('contours', {
-    //     type: 'vector',
-    //     url: 'mapbox://mapbox.mapbox-terrain-v2'
-    // });
-    // map.addLayer({
-    //     'id': 'Contour Lines',
-    //     'type': 'line',
-    //     'source': 'contours',
-    //     'source-layer': 'contour',
-    //     'layout': {
-    //         'visibility': 'none',
-    //         'line-join': 'round',
-    //         'line-cap': 'round'
-    //     },
-    //     'paint': {
-    //         'line-color': '#877b59',
-    //         'line-width': 1
-    //     }
-    // });
-
-
 });
 
 var toggleableLayerIds =
@@ -1205,7 +972,46 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     layers.appendChild(link);
 }
 
+
+
+
+//add drawing tool
+mapboxgl.accessToken = 'pk.eyJ1Ijoid2VuaGFvYnJpYW4iLCJhIjoiY2owaXNrNzhnMDB4ZjJxdGoxdHdkd2VibiJ9.Cn_2Ypo7UctdNZHt6OlDHA';
+// var map = new mapboxgl.Map({
+//     container: 'map', // container id
+//     style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
+//     center: [-91.874, 42.760], // starting position
+//     zoom: 12 // starting zoom
+// });
+
+var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+        polygon: true,
+        trash: true
+    }
+});
+map.addControl(draw);
+
+map.on('draw.create', updateArea);
+map.on('draw.delete', updateArea);
+map.on('draw.update', updateArea);
+
+function updateArea(e) {
+    var data = draw.getAll();
+    var answer = document.getElementById('calculated-area');
+    if (data.features.length > 0) {
+        var area = turf.area(data);
+        // restrict to area to 2 decimal points
+        var rounded_area = Math.round(area*100)/100;
+        answer.innerHTML = '<p><strong>' + rounded_area + '</strong></p><p>square meters</p>';
+    } else {
+        answer.innerHTML = '';
+        if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
+    }
+}
 </script>
+
 
 </body>
 </html>
