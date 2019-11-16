@@ -3,1015 +3,127 @@
 <head>
     <meta charset='utf-8' />
     <title>Parcel Development Susceptibility @SF </title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
-<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS Imports -->
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css'/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-        #remover {
-            margin: 0 auto;
-            background-color: #fb5b3f;
-            color: #fff;
-            font-weight: bold;
-            padding: 0.5em;
-            border: 2px solid #fff;
-            border-radius: 0.5em;
-            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-            cursor: pointer;
-            position: absolute;
-            left: 0.7em;
-            top: 9em;
-        }
-        #remover:hover {
-            background-color: salmon;
-        }
-    </style>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+
 
 </head>
 <body>
 
-<style>
-    #menu {
-        /* background: #ffffff; */
-        background-color: #ffffff;
-        position: absolute;
-        z-index: 1;
-        top: 10px;
-        right: 10px;
-        border-radius: 3px;
-        width: 120px;
-        border: 1px solid rgba(0,0,0,0.4);
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    #menu a {
-        font-size: 13px;
-        color: #34495E;
-        display: block;
-        margin: 0;
-        padding: 0;
-        padding: 10px;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-        text-align: center;
-    }
-
-    #menu a:last-child {
-        border: none;
-    }
-
-    #menu a:hover {
-        background-color: #f8f8f8;
-        color: #404040;
-    }
-
-    #menu a.active {
-        background-color: #3887be;
-        color: #ffffff;
-    }
-
-    #menu a.active:hover {
-        background: #3074a4;
-    }
-
-    #header{
-      position:fixed;
-      height:20px;
-      background-color: #FE2E2E;
-      top:0px;
-      left:0;
-      right:0;
-      z-index:70;
-    }
-
-    #header_text{
-      position:fixed;
-      top:0;
-      left:6px;
-      color:#ffffff;
-      font-weight: bolder;
-      font-family: Arial;
-      font-size: 14px;
-    }
-
-    #map{
-      position:fixed;
-      top:20px;
-      left:0;
-      right:0;
-      z-index:0;
-    }
-
-    .dropdown{
-      position:fixed;
-      top:20px;
-      left:10px;
-      z-index:100;
-    }
-
-    .calculation-box {
-        height: 75px;
-        width: 150px;
-        position: absolute;
-        bottom: 40px;
-        left: 10px;
-        background-color: rgba(255, 255, 255, .9);
-        padding: 15px;
-        text-align: center;
-        z-index:100;
-    }
-
-    p {
-        font-family: 'Open Sans';
-        margin: 0;
-        font-size: 13px;
-    }
-
-    h2,h3 {
-      margin: 10px;
-      font-size: 1.2em;
-    }
-
-    p {
-  font-size: 0.85em;
-  margin: 10px;
-  text-align: left;
-}
-
-    .map-overlay {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.7);
-  margin-right: 20px;
-  font-family: Arial, sans-serif;
-  overflow: auto;
-  border-radius: 3px;
-}
-
-#features {
-  top: 8px;
-  right: 160px;
-  height: 16%;
-  margin-top: 20px;
-  width: 15%;
-}
-
-#legend {
-  padding: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  line-height: 18px;
-  height: 150px;
-  margin-bottom: 40px;
-  width: 120px;
-}
-
-.legend-key {
-  display: inline-block;
-  border-radius: 20%;
-  width: 10px;
-  height: 10px;
-  margin-right: 5px;
-}
-
-
-</style>
-
-<div id = "header" style="font-family: Arial;
+<!-- <div id = "header" style="font-family: Arial;
 font-size: 14px; color:#ffffff;
 font-weight: bolder;">
      Parcel Development Susceptibility Explorer
-</div>
-
-<!-- Example split danger button -->
-<!-- <div class="btn-group">
-  <button type="button" class="btn btn-danger">Land use</button>
-  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Retail</a>
-    <a class="dropdown-item" href="#">Industrial</a>
-    <a class="dropdown-item" href="#">Other</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-  </div>
 </div> -->
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Land Use
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Residential</a>
-    <a class="dropdown-item" href="#">Industrial</a>
-    <a class="dropdown-item" href="#">Something else here</a>
+<div class="container-fluid">
+  <!-- <div class="row"> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- <form class="form-inline"> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="#">DevelopExplorer</a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <!-- <li class="nav-item active">
+              <a class="nav-link" href="#">Layers <span class="sr-only">(current)</span></a>
+            </li> -->
+            <li class="nav-item-inline dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Cities
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">San Francisco</a>
+                <a class="dropdown-item" href="#">Oakland</a>
+                <a class="dropdown-item" href="#">San Jose</a>
+
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Analysis</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        <!-- </div> -->
+      <!-- </form> -->
+
+    </nav>
   </div>
+  <!-- <div class= "row"> -->
+    <nav class="navbar-light bg-light" id="menu"></nav>
+    <div id="map"></div>
+    <div class='map-overlay' id='legend'></div>
+  <!-- </div> -->
+
 </div>
 
 
 
-
-
-
-
-
-<nav id="menu"></nav>
-
-<div id="map"></div>
-<!--
-<div class='map-overlay' id='features'><h4><h3>Year One Machine Learning Map</h3> <h4>&nbsp Parcel Development Susceptibility</h4>
-<div id='pd'><p>This map visualizes properties predicted to be susceptible to future re-development in San Francisco. The two models were trained against the last decade of development pipeline data.</p></div></div> -->
-<div class='map-overlay' id='legend'></div>
 
 <div class='calculation-box'>
     <p>Draw a polygon using the draw tools.</p>
     <div id='calculated-area'></div>
 </div>
 
-<!-- <div id="map0"></div> -->
 
-<!-- <div id='remover'>Satellite</div> -->
-
-
-<script>
-// map.getCanvas().style.cursor = 'default';
-
-mapboxgl.accessToken = 'pk.eyJ1Ijoid2VuaGFvYnJpYW4iLCJhIjoiY2owaXNrNzhnMDB4ZjJxdGoxdHdkd2VibiJ9.Cn_2Ypo7UctdNZHt6OlDHA';
-// var map0 = new mapboxgl.Map({
-//     container: 'map',
-//     style: 'mapbox://styles/mapbox/satellite-v9',
-//     zoom: 12,
-//     center: [-122.404684,37.783488]
-// });
-
-var map = new mapboxgl.Map({
-    container: 'map',
-    // style: 'mapbox://styles/wenhaobrian/cjygvkpdg0ugy1dl5jhx3wnln',
-    // style: 'mapbox://styles/wenhaobrian/cjykdqc1t0tti1cnw8mmvr4n4',
-    style: 'mapbox://styles/wenhaobrian/ck0ytfpm70oad1cp862wxpmzh',
-    zoom: 12,
-    center: [-122.404684,37.783488]
-});
-
-
-map.on('load', function () {
-  //put the layers beneath the symbols
-  //reference: https://docs.mapbox.com/mapbox-gl-js/example/geojson-layer-in-stack/
-  var layers = map.getStyle().layers;
-
-  //the existing pipeline Data in the past 2012 - 2019
-  //2012
-  //show the not in pipeline parcels:
-  // Potential parcels not in pipeline
-  var firstSymbolId1;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol') {
-      firstSymbolId1 = layers[i].id;
-      break;
-      }
-    }
-
-  map.addLayer({
-      'id': 'Potential parcels not in pipeline',
-      'type': 'line',
-      'source': {
-            'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NO_RESI_OPSP_CIE_L4000SQFT1.geojson?token=AFTLPOUJBNTECJA5KQLPLMC52IXOE'
-      },
-
-      'layout': {
-          'visibility': 'none'
-      },
-      'paint': {
-          // 'fill-color': 'rgba(87, 94, 98, 0.6)',
-          // 'fill-outline-color': 'rgba(36, 68, 89, 1)'
-
-          // '#5DADE2',
-          // 'fill-opacity': 0.05,
-
-          'line-color': '#56AD00',
-          'line-width': 1.5
-      },
-  },
-  firstSymbolId1);
-
-
-  map.on('click', 'Potential parcels not in pipeline', function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "Parcel id: "
-        + "<strong>"
-        + e.features[0].properties.mapblklot
-        + "</strong>"
-        + "<br>"
-        + "Built year: "
-        + "<strong>"
-        + e.features[0].properties.yrbuilt
-        + "</strong>"
-        +"<br>"
-        + "Use: "
-        + e.features[0].properties.landuse
-        + "</strong>")
-      .addTo(map);
-  });
-
-
-  //2014
-  var firstSymbolId2;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol') {
-      firstSymbolId1 = layers[i].id;
-      break;
-      }
-    }
-  map.addLayer({
-      'id': '2014 Q1 Pipeline',
-      'type': 'circle',
-      'source': {
-            'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202014%20Q1.geojson'
-      },
-
-      'layout': {
-          'visibility': 'none'
-      },
-      'paint': {
-        'circle-radius': 6,
-        'circle-color': '#c9d99e'
-
-      },
-  }, firstSymbolId2);
-
-  //add popup to the model 1 prediction parcels
-  map.on('click', '2014 Q1 Pipeline', function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "<strong>2014 Q1</strong>"
-        + "<br>"
-        + "<br>"
-        + "Block-lot number: "
-        + "<strong>"
-        + e.features[0].properties.block_lot
-        + "</strong>"
-        + "<br>"
-        + "Address: "
-        + "<strong>"
-        + e.features[0].properties.location_1_address
-        + "</strong>"
-        + "<br>"
-        + "Zoning: "
-        + "<strong>"
-        + e.features[0].properties.zoning
-        + "</strong>"
-        + "<br>"
-        + "Land Use: "
-        + "<strong>"
-        + e.features[0].properties.landuse
-        + "</strong>"
-        + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.best_date.substr(0,8)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
-        + "</strong>"
-      )
-      .addTo(map);
-  });
-
-
-  //2016
-  var firstSymbolId3;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol') {
-      firstSymbolId3 = layers[i].id;
-      break;
-      }
-    }
-  map.addLayer({
-      'id': '2016 Q1 Pipeline',
-      'type': 'circle',
-      'source': {
-            'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202016%20Q1.geojson'
-      },
-
-      'layout': {
-          'visibility': 'none'
-      },
-      'paint': {
-        'circle-radius': 6,
-        'circle-color': '#ffcccc'
-
-      },
-  }, firstSymbolId3);
-
-  //add popup to the model 1 prediction parcels
-  map.on('click', '2016 Q1 Pipeline', function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "<strong>2016 Q1</strong>"
-        + "<br>"
-        + "<br>"
-        + "Block-lot number: "
-        + "<strong>"
-        + e.features[0].properties.block_lot
-        + "</strong>"
-        + "<br>"
-        + "Address: "
-        + "<strong>"
-        + e.features[0].properties.location_1_address
-        + "</strong>"
-        + "<br>"
-        + "Zoning: "
-        + "<strong>"
-        + e.features[0].properties.zoning
-        + "</strong>"
-        + "<br>"
-        + "Land Use: "
-        + "<strong>"
-        + e.features[0].properties.landuse
-        + "</strong>"
-        + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.bestdate.substr(0,10)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
-        + "</strong>"
-      )
-      .addTo(map);
-  });
-
-
-  //2018
-  var firstSymbolId4;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol') {
-      firstSymbolId4 = layers[i].id;
-      break;
-      }
-    }
-  map.addLayer({
-      'id': '2018 Q1 Pipeline',
-      'type': 'circle',
-      'source': {
-            'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202018%20Q1.geojson'
-      },
-
-      'layout': {
-          'visibility': 'none'
-      },
-      'paint': {
-        'circle-radius': 6,
-        'circle-color': '#8d448b'
-
-      },
-  }, firstSymbolId4);
-
-  //add popup to the model 1 prediction parcels
-  map.on('click', '2018 Q1 Pipeline', function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "<strong>2018 Q1</strong>"
-        + "<br>"
-        + "<br>"
-        + "Block-lot number: "
-        + "<strong>"
-        + e.features[0].properties.block_lot
-        + "</strong>"
-        + "<br>"
-        + "Address: "
-        + "<strong>"
-        + e.features[0].properties.location_1_address
-        + "</strong>"
-        + "<br>"
-        + "Zoning: "
-        + "<strong>"
-        + e.features[0].properties.zoning
-        + "</strong>"
-        + "<br>"
-        + "Land Use: "
-        + "<strong>"
-        + e.features[0].properties.landuse
-        + "</strong>"
-        + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.bestdate.substr(0,10)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
-        + "</strong>"
-      )
-      .addTo(map);
-  });
-
-
-  //2018
-  var firstSymbolId5;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol') {
-      firstSymbolId5 = layers[i].id;
-      break;
-      }
-    }
-  map.addLayer({
-      'id': '2019 Q1 Pipeline',
-      'type': 'circle',
-      'source': {
-            'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202019%20Q1.geojson'
-      },
-
-      'layout': {
-          'visibility': 'none'
-      },
-      'paint': {
-        'circle-radius': 6,
-        'circle-color': '#BC4359'
-
-      },
-  }, firstSymbolId5);
-
-  //add popup to the model 1 prediction parcels
-  map.on('click', '2019 Q1 Pipeline', function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "<strong>2019 Q1</strong>"
-        + "<br>"
-        + "<br>"
-        + "Block-lot number: "
-        + "<strong>"
-        + e.features[0].properties.block_lot
-        + "</strong>"
-        + "<br>"
-        + "Address: "
-        + "<strong>"
-        + e.features[0].properties.nameaddr
-        + "</strong>"
-        + "<br>"
-        + "Neighborhood: "
-        + "<strong>"
-        + e.features[0].properties.neighborhood
-        + "</strong>"
-        + "<br>"
-        // + "Land Use: "
-        // + "<strong>"
-        // + e.features[0].properties.landuse
-        // + "</strong>"
-        // + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.bestdate.substr(0,10)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
-        + "</strong>"
-      )
-      .addTo(map);
-  });
-
-
-    // Change the cursor to a pointer when the mouse is over the states layer.
-    map.on('mouseenter', 'states-layer', function () {
-      map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'states-layer', function () {
-      map.getCanvas().style.cursor = '';
-    });
-
-
-    //add the M1 predicted YES parcels based on Logistic Regression algorithm:
-
-    var firstSymbolId5;
-    for (var i = 0; i < layers.length; i++) {
-      if (layers[i].type === 'symbol') {
-        firstSymbolId5 = layers[i].id;
-        break;
-        }
-      }
-    map.addLayer({
-        'id': 'Model 1: Pipeline Data',
-        'type': 'fill',
-        'source': {
-              'type': 'geojson',
-              'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190729_M1_PREDICTED_PRCLS_YES.geojson'
-        },
-
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': '#E74C3C',
-            'fill-opacity': 0.8
-            // 'line-color': '#5gg8f2',
-            // 'line-width': 1.5
-        },
-    }, firstSymbolId5);
-
-    //add popup to the model 1 prediction parcels
-    map.on('click', 'Model 1: Pipeline Data', function(e) {
-      new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
-        .setHTML(
-          "<strong>Model 1 Prediction</strong>"
-          + "<br>"
-          + "<br>"
-          + "Block-lot number: "
-          + "<strong>"
-          + e.features[0].properties.BLKLT
-          + "</strong>"
-          + "<br>"
-          + "Development Probability: "
-          + "<strong>"
-          + (e.features[0].properties.Predicti_2 * 100).toFixed(2)
-          + "%")
-        .addTo(map);
-    });
-
-
-    //add the M2 predicted YES parcels based on Logistic Regression algorithm:
-
-    var firstSymbolId6;
-    for (var i = 0; i < layers.length; i++) {
-      if (layers[i].type === 'symbol') {
-        firstSymbolId6 = layers[i].id;
-        break;
-        }
-      }
-    map.addLayer({
-        'id': 'Model 2: Proximity Data',
-        'type': 'fill',
-        'source': {
-              'type': 'geojson',
-              'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190729_M2_PREDICTED_PRCLS_YES.geojson'
-        },
-
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': '#EC7063',
-            'fill-opacity': 0.8
-            // 'line-color': '#5gg8f2',
-            // 'line-width': 1.5
-        },
-    }, firstSymbolId6);
-
-    //add popup to the model 2 prediction parcels
-    map.on('click', 'Model 2: Proximity Data', function(e) {
-      new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
-        .setHTML(
-          "<strong>Model 2 Prediction</strong>"
-          + "<br>"
-          + "<br>"
-          + "Block-lot number: "
-          + "<strong>"
-          + e.features[0].properties.BLKLT
-          + "</strong>"
-          + "<br>"
-          + "Development Probability: "
-          + "<strong>"
-          + (e.features[0].properties.Predicti_2 * 100).toFixed(2)
-          + "%")
-        .addTo(map);
-    });
-
-
-
-
-
-    // Find the index of the first symbol layer in the map style
-    var firstSymbolId8;
-    for (var i = 0; i < layers.length; i++) {
-      if (layers[i].type === 'symbol') {
-        firstSymbolId8 = layers[i].id;
-        break;
-        }
-      }
-
-      map.addLayer({
-          'id': 'Liquefaction Zones',
-          'type': 'fill',
-          'source': {
-                'type': 'geojson',
-                'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/San%20Francisco%20Seismic%20Hazard%20Zones.geojson'
-          },
-
-          'layout': {
-              'visibility': 'none'
-          },
-          'paint': {
-              'fill-color': '#FC6300',
-              'fill-opacity': 0.4
-
-          },
-          // 'source-layer': 'museum-cusco'
-      }, firstSymbolId8);
-
-
-      var firstSymbolId7;
-      for (var i = 0; i < layers.length; i++) {
-        if (layers[i].type === 'symbol') {
-          firstSymbolId7 = layers[i].id;
-          break;
-          }
-        }
-
-      map.addLayer({
-          'id': 'Supervisor District',
-          'type': 'line',
-          'source': {
-                'type': 'geojson',
-                'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/Current%20Supervisor%20Districts.geojson'
-          },
-
-          'layout': {
-              'visibility': 'none'
-          },
-          'paint': {
-              // 'fill-color': 'rgba(87, 94, 98, 0.6)',
-              // 'fill-outline-color': 'rgba(36, 68, 89, 1)'
-
-              // '#5DADE2',
-              // 'fill-opacity': 0.05,
-
-              'line-color': '#5DADE2',
-              'line-width': 1.5
-          },
-      },
-    firstSymbolId7);
-
-
-
-      map.on('click', 'Supervisor District', function(e) {
-        new mapboxgl.Popup()
-          .setLngLat(e.lngLat)
-          .setHTML(
-            "District: "
-            + "<strong>"
-            + e.features[0].properties.supervisor
-            + "</strong>"
-            + "<br>"
-            + "Name: "
-            + "<strong>"
-            + e.features[0].properties.supname)
-          .addTo(map);
-      });
-
-
-
-
-
-
-
-
-    var firstSymbolId9;
-    for (var i = 0; i < layers.length; i++) {
-      if (layers[i].type === 'symbol') {
-        firstSymbolId9 = layers[i].id;
-        break;
-        }
-      }
-    map.addLayer({
-        'id': 'Zoned as Industrial',
-        'type': 'fill',
-        'source': {
-              'type': 'geojson',
-              'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190726_ZONING_INDUSTRIAL.geojson'
-        },
-
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': '#AE56FB',
-            'fill-opacity': 0.5
-            // 'line-color': '#5gg8f2',
-            // 'line-width': 1.5
-        },
-    }, firstSymbolId9);
-
-
-
-    //ADD THE POP DENSITY FOR EACH NEIGHBORHOODS IN 3D VIEW:
-    map.addLayer({
-        'id': 'Population Density',
-        'type': 'fill-extrusion',
-        'source': {
-              'type': 'geojson',
-              'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190730_NHBHD_POPDENS_NEW_COLOR.geojson'
-        },
-
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-extrusion-color': [
-                'match',
-                ['get', 'RANGE'],
-                1, '#ffffcc',
-                2, '#c7e9b4',
-                3, '#7fcdbb',
-                4, '#41b6c4',
-                5, '#2c7fb8',
-                6, '#253494',
-                '#FFFFFF'
-                // 1, '#FFCA28',
-                // 2, '#FF7043',
-                // 3, '#E53935',
-                // 4, '#990033',
-                // 5, '#880E4F',
-                // 6, '#330066',
-                // '#FFFFFF'
-            ],
-            // '#82E0AA',
-            'fill-extrusion-height': ['get', 'height_2'],
-            'fill-extrusion-base': 0,
-            'fill-extrusion-opacity': 0.6,
-
-            // 'line-color': '#F5F52D',
-            // 'line-width': 1.5
-        },
-    });
-
-    //add popup to the neighborhoods population density
-    map.on('click', 'Population Density', function(e) {
-      new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
-        .setHTML(
-          // "<strong>Population</strong>"
-          "Neighborhood: "
-          + "<strong>"
-          + e.features[0].properties.name
-          + "</strong>"
-          + "<br>"
-          + "Population Density: "
-          + "<strong>"
-          + e.features[0].properties._mean.toFixed(0)
-          + "</strong>"
-          + " per sq mi"
-        )
-        .addTo(map);
-    });
-
-
-    //ADD LEGEND FOR THE POPULATION DENSITY
-    var layers = ['Susceptible to Development','0-3000', '3000-6000', '6000-9000', '9000-12000', '12000-36000', '>36000'];
-    var colors = [
-      '#E74C3C',
-      '#ffffcc',
-      '#c7e9b4',
-      '#7fcdbb',
-      '#41b6c4',
-      '#2c7fb8',
-      '#253494'
-    ];
-
-    for (i = 0; i < layers.length; i++) {
-      var layer = layers[i];
-      var color = colors[i];
-      var item = document.createElement('div');
-      var key = document.createElement('span');
-      key.className = 'legend-key';
-      key.style.backgroundColor = color;
-
-      var value = document.createElement('span');
-      value.innerHTML = layer;
-      item.appendChild(key);
-      item.appendChild(value);
-      legend.appendChild(item);
-    }
-
-
-});
-
-var toggleableLayerIds =
-  [
-    '',
-    // 'Pipeline Dataset',
-    'Potential parcels not in pipeline',
-    // '2012 Q1 Pipeline',
-    // '2014 Q1 Pipeline',
-    // '2016 Q1 Pipeline',
-    // '2018 Q1 Pipeline',
-    // '2019 Q1 Pipeline',
-    '',
-
-   // Model Prediction
-    'Model 1: Pipeline Data',
-    // 'Model 2: Proximity Data',
-    // 'Model 3: Prediction 2050 - No Zoning',
-    // 'Pipeline Data',
-    '',
-    'Supervisor District',
-    'Liquefaction Zones',
-    'Zoned as Industrial',
-    'Population Density'
-    // 'SOM Towers'
-    // 'Zoned as Residential',
-    // 'Contour Lines',
-    // 'Flickr Density'
-  ];
-
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-    var id = toggleableLayerIds[i];
-
-    var link = document.createElement('a');
-    link.href = '#';
-    link.className = 'active';
-    link.textContent = id;
-
-    link.onclick = function (e) {
-        var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
-
-        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-        if (visibility === 'visible') {
-            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = '';
-        } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-        }
-    };
-
-    var layers = document.getElementById('menu');
-    layers.appendChild(link);
-}
-
-
-
-
-//add drawing tool
-mapboxgl.accessToken = 'pk.eyJ1Ijoid2VuaGFvYnJpYW4iLCJhIjoiY2owaXNrNzhnMDB4ZjJxdGoxdHdkd2VibiJ9.Cn_2Ypo7UctdNZHt6OlDHA';
-// var map = new mapboxgl.Map({
-//     container: 'map', // container id
-//     style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
-//     center: [-91.874, 42.760], // starting position
-//     zoom: 12 // starting zoom
-// });
-
-var draw = new MapboxDraw({
-    displayControlsDefault: false,
-    controls: {
-        polygon: true,
-        trash: true
-    }
-});
-map.addControl(draw);
-
-map.on('draw.create', updateArea);
-map.on('draw.delete', updateArea);
-map.on('draw.update', updateArea);
-
-function updateArea(e) {
-    var data = draw.getAll();
-    var answer = document.getElementById('calculated-area');
-    if (data.features.length > 0) {
-        var area = turf.area(data);
-        // restrict to area to 2 decimal points
-        var rounded_area = Math.round(area*100)/100;
-        answer.innerHTML = '<p><strong>' + rounded_area + '</strong></p><p>square meters</p>';
-    } else {
-        answer.innerHTML = '';
-        if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
-    }
-}
-</script>
-
+<!-- Javascript Imports -->
+<!-- //embed the 60 days challenge tableau monitoring graphics below -->
+<!-- <script type='text/javascript' src='https://tableau.som.com/javascripts/api/viz_v1.js'></script> -->
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<script src="js/leaflet-providers.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+
+<script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+<script src="js/bundle.js"></script>
+<script src="js/pdfreport.js"></script>
+<script src="js/leaflet-heat.js"></script>
+<script src="js/decode.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
