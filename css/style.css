@@ -5,7 +5,11 @@
       position:relative;
       top:10%;
       margin:10%;
-      left:60%;
+      left:50%;
+    }
+
+    .navbar {
+      z-index:10;
     }
 
     #map {
@@ -37,8 +41,8 @@
     }
 
     .calculation-box {
-        height: 75px;
-        width: 150px;
+        height: 100px;
+        width: 160px;
         position: absolute;
         bottom: 40px;
         left: 10px;
