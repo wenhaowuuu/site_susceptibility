@@ -93,6 +93,8 @@ var toggleableLayerIds =
     'Supervisor District',
     'Liquefaction Zones',
     'Zoned as Industrial',
+    'BART stations',
+    'BART 5min Walkshed',
     'Population Density'
     // 'SOM Towers'
     // 'Zoned as Residential',
@@ -409,6 +411,70 @@ for (var i = 0; i < layers.length; i++) {
   }, firstSymbolId6);
 
 
+  //BART stations
+  var firstSymbolI7;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol') {
+      firstSymbolId7 = layers[i].id;
+      break;
+      }
+    }
+
+    map.addLayer({
+        'id': 'BART stations',
+        'type': 'circle',
+        'source': {
+              'type': 'geojson',
+              'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20190925_BART_STATIONS.geojson'
+        },
+
+        'layout': {
+            'visibility': 'none'
+        },
+
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#2980B9',
+
+
+        },
+        // 'source-layer': 'museum-cusco'
+    }, firstSymbolId7);
+
+    //BART stations
+    var firstSymbolI8;
+    for (var i = 0; i < layers.length; i++) {
+      if (layers[i].type === 'symbol') {
+        firstSymbolId8 = layers[i].id;
+        break;
+        }
+      }
+
+      map.addLayer({
+          'id': 'BART 5min Walkshed',
+          'type': 'fill',
+          'source': {
+                'type': 'geojson',
+                'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191124_BART_BUFF_5MIN.geojson'
+          },
+
+          'layout': {
+              'visibility': 'none'
+          },
+
+          'paint': {
+            'fill-color': '#85C1E9',
+            'fill-opacity': 0.5
+
+
+          },
+          // 'source-layer': 'museum-cusco'
+      }, firstSymbolId8);
+
+
+
+
+
   //ADD THE POP DENSITY FOR EACH NEIGHBORHOODS IN 3D VIEW:
   map.addLayer({
       'id': 'Population Density',
@@ -469,6 +535,9 @@ for (var i = 0; i < layers.length; i++) {
       )
       .addTo(map);
   });
+
+
+
 
   //the existing pipeline Data in the past 2012 - 2019
   //2012
