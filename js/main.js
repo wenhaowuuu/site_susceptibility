@@ -202,6 +202,12 @@ map.on('load', function () {
       .addTo(map);
   });
 
+
+
+// 2019 Q2 dev pipeline parcels
+// https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson
+
+
   //show the not in pipeline parcels:
   // Potential parcels not in pipeline
   var firstSymbolId2;
