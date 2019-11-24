@@ -82,6 +82,7 @@ var toggleableLayerIds =
     '',
     // 'Pipeline Dataset',
     '2019 Q1 Development Pipeline',
+    '2019 Q2 Development Pipeline',
     'Parcels not in pipeline',
     '',
 
@@ -94,7 +95,9 @@ var toggleableLayerIds =
     'Liquefaction Zones',
     'Zoned as Industrial',
     'BART stations',
+    'BART line',
     'BART 5min Walkshed',
+    'BART 10min Walkshed',
     'Population Density'
     // 'SOM Towers'
     // 'Zoned as Residential',
@@ -204,10 +207,72 @@ map.on('load', function () {
       .addTo(map);
   });
 
-
-
 // 2019 Q2 dev pipeline parcels
 // https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson
+for (var i = 0; i < layers.length; i++) {
+  if (layers[i].type === 'symbol') {
+    firstSymbolId15 = layers[i].id;
+    break;
+    }
+  }
+map.addLayer({
+    'id': '2019 Q2 Development Pipeline',
+    'type': 'circle',
+    'source': {
+          'type': 'geojson',
+          'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson'
+    },
+
+    'layout': {
+        'visibility': 'none'
+    },
+    'paint': {
+      'circle-radius': 3,
+      'circle-color': '#76D7C4',
+      // 'fill-opacity': 0.05,
+      // 'opacity': 0.5,
+    },
+}, firstSymbolId15);
+
+//add popup to the model 1 prediction parcels
+map.on('click', '2019 Q2 Development Pipeline', function(e) {
+  new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(
+      "<strong>2012 Q1</strong>"
+      + "<br>"
+      + "<br>"
+      + "Block-lot number: "
+      + "<strong>"
+      + e.features[0].properties.block_lot
+      + "</strong>"
+      + "<br>"
+      + "Address: "
+      + "<strong>"
+      + e.features[0].properties.location_1_address
+      + "</strong>"
+      + "<br>"
+      + "Zoning: "
+      + "<strong>"
+      + e.features[0].properties.zoning
+      + "</strong>"
+      + "<br>"
+      + "Land Use: "
+      + "<strong>"
+      + e.features[0].properties.landuse
+      + "</strong>"
+      + "<br>"
+      + "Project Date: "
+      + "<strong>"
+      + e.features[0].properties.project_date.substr(0,10)
+      + "</strong>"
+      + "<br>"
+      + "Height Limit: "
+      + "<strong>"
+      + e.features[0].properties.heightlimit
+      + "</strong>")
+    .addTo(map);
+});
 
 
   //show the not in pipeline parcels:
@@ -420,7 +485,8 @@ for (var i = 0; i < layers.length; i++) {
       }
     }
 
-    map.addLayer({
+    map.addLayer(
+      {
         'id': 'BART stations',
         'type': 'circle',
         'source': {
@@ -434,14 +500,47 @@ for (var i = 0; i < layers.length; i++) {
 
         'paint': {
           'circle-radius': 5,
-          'circle-color': '#2980B9',
+          'circle-color': '#E74C3C',
 
 
         },
         // 'source-layer': 'museum-cusco'
-    }, firstSymbolId7);
+    },
 
-    //BART stations
+    firstSymbolId7);
+
+    //BART tracks
+    var firstSymbolI75;
+    for (var i = 0; i < layers.length; i++) {
+      if (layers[i].type === 'symbol') {
+        firstSymbolId75 = layers[i].id;
+        break;
+        }
+      }
+
+      map.addLayer(
+
+        {
+          'id': 'BART line',
+          'type': 'line',
+          'source': {
+                'type': 'geojson',
+                'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20190925_BART_TRACK.geojson'
+          },
+
+          'layout': {
+              'visibility': 'none'
+          },
+
+          'paint': {
+            'line-color': '#E74C3C',
+            'line-width': 1.5
+          },
+        },
+       firstSymbolId75);
+
+
+    //BART stations 5min walkshed
     var firstSymbolI8;
     for (var i = 0; i < layers.length; i++) {
       if (layers[i].type === 'symbol') {
@@ -455,7 +554,7 @@ for (var i = 0; i < layers.length; i++) {
           'type': 'fill',
           'source': {
                 'type': 'geojson',
-                'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191124_BART_BUFF_5MIN.geojson'
+                'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191124_BART_BUFF_1320FT.geojson'
           },
 
           'layout': {
@@ -472,6 +571,35 @@ for (var i = 0; i < layers.length; i++) {
       }, firstSymbolId8);
 
 
+      //BART stations
+      var firstSymbolI9;
+      for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol') {
+          firstSymbolId9 = layers[i].id;
+          break;
+          }
+        }
+
+        map.addLayer({
+            'id': 'BART 10min Walkshed',
+            'type': 'fill',
+            'source': {
+                  'type': 'geojson',
+                  'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191124_BART_BUFF_2640FT.geojson'
+            },
+
+            'layout': {
+                'visibility': 'none'
+            },
+
+            'paint': {
+              'fill-color': '#85C1E9',
+              'fill-opacity': 0.3
+
+
+            },
+            // 'source-layer': 'museum-cusco'
+        }, firstSymbolId9);
 
 
 
