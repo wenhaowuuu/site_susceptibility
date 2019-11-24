@@ -290,7 +290,7 @@ map.on('click', '2019 Q2 Development Pipeline', function(e) {
       'type': 'line',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NO_RESI_OPSP_CIE_L4000SQFT1.geojson?token=AFTLPOUJBNTECJA5KQLPLMC52IXOE'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NORESI_OPSP_CIE_L4000SQFT1_NO2019Q12.geojson'
       },
 
       'layout': {
