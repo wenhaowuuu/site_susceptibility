@@ -80,9 +80,12 @@ var map = new mapboxgl.Map({
 var toggleableLayerIds =
   [
     '',
+    // 'SOMA Boundary'
+    'Site Boundary',
+    '',
     // 'Pipeline Dataset',
-    '2019 Q1 Development Pipeline',
-    '2019 Q2 Development Pipeline',
+    '2019 Q1Q2 Development Pipeline',
+    // '2019 Q2 Development Pipeline',
     'Parcels not in pipeline',
     '',
 
@@ -140,6 +143,49 @@ map.on('load', function () {
   //reference: https://docs.mapbox.com/mapbox-gl-js/example/geojson-layer-in-stack/
   var layers = map.getStyle().layers;
 
+  var firstSymbolI0;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol') {
+      firstSymbolId0 = layers[i].id;
+      break;
+      }
+    }
+
+  map.addLayer({
+      'id': 'Site Boundary',
+      'type': 'line',
+      'source': {
+            'type': 'geojson',
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191219_SOMA_BOUNDARY.geojson'
+      },
+
+      'layout': {
+          'visibility': 'none'
+      },
+      'paint': {
+          'line-color': '#E53131',
+          'line-width': 2.5
+      },
+  },
+firstSymbolId0);
+
+map.on('click', 'Site Boundary', function(e) {
+  new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    // .setHTML(
+    //   "District: "
+    //   + "<strong>"
+    //   + e.features[0].properties.supervisor
+    //   + "</strong>"
+    //   + "<br>"
+    //   + "Name: "
+    //   + "<strong>"
+    //   + e.features[0].properties.supname)
+    .addTo(map);
+});
+
+
+
   // Find the index of the first symbol layer in the map style, so that the layer added can below the basemap object
   var firstSymbolId1;
   for (var i = 0; i < layers.length; i++) {
@@ -149,11 +195,11 @@ map.on('load', function () {
       }
     }
   map.addLayer({
-      'id': '2019 Q1 Development Pipeline',
+      'id': '2019 Q1Q2 Development Pipeline',
       'type': 'circle',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/SF%20Development%20Pipeline%202019%20Q1.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/2019_Q1Q2_MERGE.geojson'
       },
 
       'layout': {
@@ -168,7 +214,7 @@ map.on('load', function () {
   }, firstSymbolId1);
 
   //add popup to the model 1 prediction parcels
-  map.on('click', '2019 Q1 Development Pipeline', function(e) {
+  map.on('click', '2019 Q1Q2 Development Pipeline', function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
@@ -209,70 +255,70 @@ map.on('load', function () {
 
 // 2019 Q2 dev pipeline parcels
 // https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson
-for (var i = 0; i < layers.length; i++) {
-  if (layers[i].type === 'symbol') {
-    firstSymbolId15 = layers[i].id;
-    break;
-    }
-  }
-map.addLayer({
-    'id': '2019 Q2 Development Pipeline',
-    'type': 'circle',
-    'source': {
-          'type': 'geojson',
-          'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson'
-    },
-
-    'layout': {
-        'visibility': 'none'
-    },
-    'paint': {
-      'circle-radius': 3,
-      'circle-color': '#76D7C4',
-      // 'fill-opacity': 0.05,
-      // 'opacity': 0.5,
-    },
-}, firstSymbolId15);
-
-//add popup to the model 1 prediction parcels
-map.on('click', '2019 Q2 Development Pipeline', function(e) {
-  new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(
-      "<strong>2012 Q1</strong>"
-      + "<br>"
-      + "<br>"
-      + "Block-lot number: "
-      + "<strong>"
-      + e.features[0].properties.block_lot
-      + "</strong>"
-      + "<br>"
-      + "Address: "
-      + "<strong>"
-      + e.features[0].properties.location_1_address
-      + "</strong>"
-      + "<br>"
-      + "Zoning: "
-      + "<strong>"
-      + e.features[0].properties.zoning
-      + "</strong>"
-      + "<br>"
-      + "Land Use: "
-      + "<strong>"
-      + e.features[0].properties.landuse
-      + "</strong>"
-      + "<br>"
-      + "Project Date: "
-      + "<strong>"
-      + e.features[0].properties.project_date.substr(0,10)
-      + "</strong>"
-      + "<br>"
-      + "Height Limit: "
-      + "<strong>"
-      + e.features[0].properties.heightlimit
-      + "</strong>")
-    .addTo(map);
-});
+// for (var i = 0; i < layers.length; i++) {
+//   if (layers[i].type === 'symbol') {
+//     firstSymbolId15 = layers[i].id;
+//     break;
+//     }
+//   }
+// map.addLayer({
+//     'id': '2019 Q2 Development Pipeline',
+//     'type': 'circle',
+//     'source': {
+//           'type': 'geojson',
+//           'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson'
+//     },
+//
+//     'layout': {
+//         'visibility': 'none'
+//     },
+//     'paint': {
+//       'circle-radius': 3,
+//       'circle-color': '#76D7C4',
+//       // 'fill-opacity': 0.05,
+//       // 'opacity': 0.5,
+//     },
+// }, firstSymbolId15);
+//
+// //add popup to the model 1 prediction parcels
+// map.on('click', '2019 Q2 Development Pipeline', function(e) {
+//   new mapboxgl.Popup()
+//     .setLngLat(e.lngLat)
+//     .setHTML(
+//       "<strong>2012 Q1</strong>"
+//       + "<br>"
+//       + "<br>"
+//       + "Block-lot number: "
+//       + "<strong>"
+//       + e.features[0].properties.block_lot
+//       + "</strong>"
+//       + "<br>"
+//       + "Address: "
+//       + "<strong>"
+//       + e.features[0].properties.location_1_address
+//       + "</strong>"
+//       + "<br>"
+//       + "Zoning: "
+//       + "<strong>"
+//       + e.features[0].properties.zoning
+//       + "</strong>"
+//       + "<br>"
+//       + "Land Use: "
+//       + "<strong>"
+//       + e.features[0].properties.landuse
+//       + "</strong>"
+//       + "<br>"
+//       + "Project Date: "
+//       + "<strong>"
+//       + e.features[0].properties.project_date.substr(0,10)
+//       + "</strong>"
+//       + "<br>"
+//       + "Height Limit: "
+//       + "<strong>"
+//       + e.features[0].properties.heightlimit
+//       + "</strong>")
+//     .addTo(map);
+// });
 
 
   //show the not in pipeline parcels:
@@ -344,7 +390,8 @@ map.on('click', '2019 Q2 Development Pipeline', function(e) {
       'type': 'fill',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190729_M1_PREDICTED_PRCLS_YES.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_PROB_MTH05_SOMA_PRCL_NOPIPE_JOINED_N.geojson'
+            // 'data': 'https://raw.githubusercontent.com/wenhaowuuu/development_potential/master/layer_data/20190729_M1_PREDICTED_PRCLS_YES.geojson'
       },
 
       'layout': {
@@ -361,17 +408,42 @@ map.on('click', '2019 Q2 Development Pipeline', function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
-        "<strong>Model 1 Prediction</strong>"
+        "<strong>Machine Learning Prediction</strong>"
         + "<br>"
         + "<br>"
         + "Block-lot number: "
         + "<strong>"
-        + e.features[0].properties.BLKLT
+        + e.features[0].properties.blklot
+        + "</strong>"
+        + "<br>"
+        + "Zoning Code: "
+        + "<strong>"
+        + e.features[0].properties.Zoning_Code
+        + "</strong>"
+        + "<br>"
+        + "Area: "
+        + "<strong>"
+        + e.features[0].properties.Lot_Area
+        + "</strong>"
+        + "<br>"
+        + "Neighborhood: "
+        + "<strong>"
+        + e.features[0].properties.Analysis_NHBD
+        + "</strong>"
+        + "<br>"
+        + "Existing Use: "
+        + "<strong>"
+        + e.features[0].properties.Use_Code
+        + "</strong>"
+        + "<br>"
+        + "Land Value: "
+        + "<strong>"
+        + e.features[0].properties.Ass_Land_Val
         + "</strong>"
         + "<br>"
         + "Development Probability: "
         + "<strong>"
-        + (e.features[0].properties.Predicti_2 * 100).toFixed(2)
+        + (e.features[0].properties.Prediction * 100).toFixed(2)
         + "%")
       .addTo(map);
   });
