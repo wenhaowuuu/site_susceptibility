@@ -188,8 +188,7 @@ map.on('click', 'Site Boundary', function(e) {
 //To load layers:
 // 1.ALL PARCELS: https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191219_SOMA_PRCL.geojson
 // 2.DEV PIPELINE PARCELS:
-// 3.NOT IN PIPELINE PRCLS: https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191219_SOMA_NOPIPE_13-19_ASSR_JOINED.geojson
-//
+// 3.NOT IN PIPELINE PRCLS: https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N.geojson
 // 4.ML PRCLS:
 
 
@@ -343,7 +342,8 @@ map.on('click', 'Site Boundary', function(e) {
       'type': 'line',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NORESI_OPSP_CIE_L4000SQFT1_NO2019Q12.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N.geojson'
+            // 'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NORESI_OPSP_CIE_L4000SQFT1_NO2019Q12.geojson'
       },
 
       'layout': {
@@ -369,16 +369,16 @@ map.on('click', 'Site Boundary', function(e) {
       .setHTML(
         "Parcel id: "
         + "<strong>"
-        + e.features[0].properties.mapblklot
+        + e.features[0].properties.blklot
         + "</strong>"
         + "<br>"
         + "Built year: "
         + "<strong>"
-        + e.features[0].properties.yrbuilt
+        + e.features[0].properties.Year_Built
         + "</strong>"
         +"<br>"
         + "Use: "
-        + e.features[0].properties.landuse
+        + e.features[0].properties.UseCode
         + "</strong>")
       .addTo(map);
   });
