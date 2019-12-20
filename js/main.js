@@ -342,7 +342,7 @@ map.on('click', 'Site Boundary', function(e) {
       'type': 'line',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N1.geojson'
             // 'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191110_PRCL_NOPIPE_NORESI_OPSP_CIE_L4000SQFT1_NO2019Q12.geojson'
       },
 
@@ -372,13 +372,29 @@ map.on('click', 'Site Boundary', function(e) {
         + e.features[0].properties.blklot
         + "</strong>"
         + "<br>"
-        + "Built year: "
+        + "Zoning Code: "
         + "<strong>"
-        + e.features[0].properties.Year_Built
+        + e.features[0].properties.Zoning_Code
         + "</strong>"
-        +"<br>"
-        + "Use: "
-        + e.features[0].properties.UseCode
+        + "<br>"
+        + "Area: "
+        + "<strong>"
+        + e.features[0].properties.Lot_Area
+        + "</strong>"
+        + "<br>"
+        + "Neighborhood: "
+        + "<strong>"
+        + e.features[0].properties.Analysis_Neighborhood
+        + "</strong>"
+        + "<br>"
+        + "Existing Use: "
+        + "<strong>"
+        + e.features[0].properties.Use_Code
+        + "</strong>"
+        + "<br>"
+        + "Land Value: "
+        + "<strong>"
+        + e.features[0].properties.Ass_Land_Val
         + "</strong>")
       .addTo(map);
   });
