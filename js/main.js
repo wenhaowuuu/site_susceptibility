@@ -185,6 +185,13 @@ map.on('click', 'Site Boundary', function(e) {
 });
 
 
+//To load layers:
+// 1.ALL PARCELS: https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191219_SOMA_PRCL.geojson
+// 2.DEV PIPELINE PARCELS:
+// 3.NOT IN PIPELINE PRCLS: https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191219_SOMA_NOPIPE_13-19_ASSR_JOINED.geojson
+//
+// 4.ML PRCLS:
+
 
   // Find the index of the first symbol layer in the map style, so that the layer added can below the basemap object
   var firstSymbolId1;
