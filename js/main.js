@@ -84,7 +84,7 @@ var toggleableLayerIds =
     'Site Boundary',
     '',
     // 'Pipeline Dataset',
-    '2019 Q1Q2 Development Pipeline',
+    'In Development Pipeline',
     // '2019 Q2 Development Pipeline',
     'Parcels not in pipeline',
     '',
@@ -201,8 +201,8 @@ map.on('click', 'Site Boundary', function(e) {
       }
     }
   map.addLayer({
-      'id': '2019 Q1Q2 Development Pipeline',
-      'type': 'circle',
+      'id': 'In Development Pipeline',
+      'type': 'line',
       'source': {
             'type': 'geojson',
             'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/2019_Q1Q2_MERGE.geojson'
@@ -220,7 +220,7 @@ map.on('click', 'Site Boundary', function(e) {
   }, firstSymbolId1);
 
   //add popup to the model 1 prediction parcels
-  map.on('click', '2019 Q1Q2 Development Pipeline', function(e) {
+  map.on('click', 'In Development Pipeline', function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
