@@ -8,8 +8,8 @@
     <!-- CSS Imports -->
     <!-- LOAD THE QUERY BUILDER -->
 
-    <link rel="stylesheet" href="dist/css/query-builder.default.css" id="qb-theme">
-    <link rel="stylesheet" href="http://mistic100.github.io/jQuery-QueryBuilder/assets/flags/flags.css">
+    <!-- <link rel="stylesheet" href="dist/css/query-builder.default.css" id="qb-theme">
+    <link rel="stylesheet" href="http://mistic100.github.io/jQuery-QueryBuilder/assets/flags/flags.css"> -->
 
     <!-- <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' /> -->
@@ -86,6 +86,12 @@ font-weight: bolder;">
         </div>
       <!-- </form> -->
       </nav>
+
+
+
+
+      <!-- <label for="basic-url">Your vanity URL</label> -->
+
     </div>
 
 
@@ -93,8 +99,68 @@ font-weight: bolder;">
 
   <!-- <div class= "row"> -->
     <nav class="navbar-light bg-light" id="menu"></nav>
+
+
+
+
     <div id="map"></div>
     <div class='map-overlay' id='legend'></div>
+
+    <div class='map-overlay' id='filter'>
+      <div class="input-group mb-3">
+        <label for="basic-url">Parcel Size</label>
+        <!-- <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Range</span>
+        </div> -->
+        <!-- <div class="slidecontainer">
+          <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div> -->
+
+        <!-- <input type="range" min="0" max="1000" step="10" value="300" data-orientation="horizontal"> -->
+
+
+        <input type="text" class="form-control" id='MinArea' placeholder="Min" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" id='MaxArea' placeholder="Max" aria-label="Username" aria-describedby="basic-addon2">
+
+        <br>
+        <label for="basic-url">Zoning</label>
+        <input type="text" class="dropdown-menu" id='Zoning' placeholder="Zoning type" aria-label="Username" aria-describedby="basic-addon3">
+        <a class="dropdown-item" href="#">Residential</a>
+        <a class="dropdown-item" href="#">Commercial</a>
+        <a class="dropdown-item" href="#">Public</a>
+
+        <!-- <input type="text" class="form-control" id='filter4' placeholder="Max" aria-label="Username" aria-describedby="basic-addon4"> -->
+        <br>
+        <label for="customRange3">Land Value</label>
+        <input type="text" class="form-control" id='MinLandVal' placeholder="Min" aria-label="Username" aria-describedby="basic-addon4">
+        <input type="text" class="form-control" id='MaxLandVal' placeholder="Max" aria-label="Username" aria-describedby="basic-addon5">
+
+        <br>
+        <label for="customRange3">Distance to Transit</label>
+        <input type="text" class="form-control" id='TransitDist' placeholder="Min" aria-label="Username" aria-describedby="basic-addon4">
+
+        <br>
+        <label for="customRange3">Distance to Park</label>
+        <input type="text" class="form-control" id='ParkDist' placeholder="Min" aria-label="Username" aria-describedby="basic-addon4">
+
+        <!-- <input type="range" class="custom-range" min="0" max="10" step="0.5" id="customRange3"> -->
+        <!-- <div class="slidecontainer">
+          <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div> -->
+
+        <!-- <form class="multi-range-field my-5 pb-5">
+  <input id="multi" class="multi-range" type="range" />
+</form> -->
+
+        <br>
+        <button class="btn btn-primary" id="note" type="button">Note</button>
+        <br>
+        <button class="btn btn-primary" id="find" type="button">Find</button>
+        <br>
+
+      </div>
+    </div>
+
     <!-- <div class="pos-f-t">
       <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-primary p-4">
@@ -121,6 +187,23 @@ font-weight: bolder;">
 <!-- Javascript Imports -->
 <!-- //embed the 60 days challenge tableau monitoring graphics below -->
 <!-- <script type='text/javascript' src='https://tableau.som.com/javascripts/api/viz_v1.js'></script> -->
+
+<!-- <script src="js/rangeslider.min.js"></script>
+<script>
+    // Initialize a new plugin instance for all
+    // e.g. $('input[type="range"]') elements.
+    $('input[type="range"]').rangeslider();
+
+    // Destroy all plugin instances created from the
+    // e.g. $('input[type="range"]') elements.
+    $('input[type="range"]').rangeslider('destroy');
+
+    // Update all rangeslider instances for all
+    // e.g. $('input[type="range"]') elements.
+    // Usefull if you changed some attributes e.g. `min` or `max` etc.
+    $('input[type="range"]').rangeslider('update', true);
+</script> -->
+
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>

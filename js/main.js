@@ -69,10 +69,36 @@ var map = new mapboxgl.Map({
 });
 
 
+var prcl_nopipe = "https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N1.geojson";
+
 //load data from external source:
 // map.addSource('districts', {
 //   type: 'geojson',
 //   data: 'https://mydomain.mydata.geojson'
+// });
+
+
+//jquery for filter control
+// $(function() {
+//   const cssClasses = [
+//     'rangeslider--is-lowest-value',
+//     'rangeslider--is-highest-value'
+//   ];
+//
+//   $('input[type=range]')
+//     .rangeslider({
+//       polyfill: false
+//     })
+//     .on('input', function() {
+//       const fraction = (this.value - this.min) / (this.max - this.min);
+//       if (fraction === 0) {
+//         this.nextSibling.classList.add(cssClasses[0]);
+//       } else if (fraction === 1) {
+//         this.nextSibling.classList.add(cssClasses[1]);
+//       } else {
+//         this.nextSibling.classList.remove(...cssClasses)
+//       }
+//     });
 // });
 
 
@@ -84,7 +110,7 @@ var toggleableLayerIds =
     'Site Boundary',
     '',
     // 'Pipeline Dataset',
-    'In Development Pipeline',
+    'Parcels in Development Pipeline',
     // '2019 Q2 Development Pipeline',
     'Parcels not in pipeline',
     '',
@@ -201,26 +227,31 @@ map.on('click', 'Site Boundary', function(e) {
       }
     }
   map.addLayer({
-      'id': 'In Development Pipeline',
-      'type': 'line',
+      'id': 'Parcels in Development Pipeline',
+      'type': 'fill',
       'source': {
             'type': 'geojson',
-            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/2019_Q1Q2_MERGE.geojson'
+            'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_PIPE_PRCL_ASSR_JOINED_N.geojson'
+            // 'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/2019_Q1Q2_MERGE.geojson'
       },
 
       'layout': {
           'visibility': 'none'
       },
       'paint': {
-        'circle-radius': 3,
-        'circle-color': '#54BDE7',
+
+        'fill-color': '#54BDE7',
+        'fill-opacity': 0.4
+
+        // 'circle-radius': 3,
+        // 'circle-color': '#54BDE7',
         // 'fill-opacity': 0.05,
         // 'opacity': 0.5,
       },
   }, firstSymbolId1);
 
   //add popup to the model 1 prediction parcels
-  map.on('click', 'In Development Pipeline', function(e) {
+  map.on('click', 'Parcels in Development Pipeline', function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
       .setHTML(
@@ -229,32 +260,22 @@ map.on('click', 'Site Boundary', function(e) {
         + "<br>"
         + "Block-lot number: "
         + "<strong>"
-        + e.features[0].properties.block_lot
+        + e.features[0].properties.blklot
         + "</strong>"
         + "<br>"
-        + "Address: "
-        + "<strong>"
-        + e.features[0].properties.location_1_address
-        + "</strong>"
-        + "<br>"
+        // + "Address: "
+        // + "<strong>"
+        // + e.features[0].properties.location_1_address
+        // + "</strong>"
+        // + "<br>"
         + "Zoning: "
         + "<strong>"
-        + e.features[0].properties.zoning
+        + e.features[0].properties.Zoning_Code
         + "</strong>"
         + "<br>"
         + "Land Use: "
         + "<strong>"
-        + e.features[0].properties.landuse
-        + "</strong>"
-        + "<br>"
-        + "Project Date: "
-        + "<strong>"
-        + e.features[0].properties.project_date.substr(0,10)
-        + "</strong>"
-        + "<br>"
-        + "Height Limit: "
-        + "<strong>"
-        + e.features[0].properties.heightlimit
+        + e.features[0].properties.Use_Code
         + "</strong>")
       .addTo(map);
   });
@@ -328,8 +349,64 @@ map.on('click', 'Site Boundary', function(e) {
 
 
   //show the not in pipeline parcels:
-  // Potential parcels not in pipeline
+  //DOWNLOAD THE NO PIPE PARCELS FOR FILTERING USE
+  //AJAX Maybe not working here for mapbox maps
+    // $(document).ready(function(){
+    //   $.ajax(prcl_nopipe).done(function(data) {
+    //     parsedData00 = JSON.parse(data);
+    //     console.log(parsedData00);
+    //     var layerMappedPolygons = L.geoJson(parsedData00,
+    //       {
+    //         style: {opacity:0.4,width:0.5,color:'#E0903F'},
+    //         type: "fill",
+    //         pointToLayer: function (feature, latlng) {
+    //           return new L.Polygon(latlng, {
+    //
+    //           });
+    //         },
+    //
+    //         onEachFeature: function(feature,layer){
+    //
+    //           layer.bindPopup(
+    //             "Parcel id: "
+    //             + "<strong>"
+    //             + feature.properties.blklot
+    //             + "</strong>"
+    //             + "<br>"
+    //             + "Zoning Code: "
+    //             + "<strong>"
+    //             + feature.properties.Zoning_Code
+    //             + "</strong>"
+    //             + "<br>"
+    //             + "Area: "
+    //             + "<strong>"
+    //             + feature.properties.Lot_Area
+    //             + "</strong>"
+    //             + "<br>"
+    //             + "Neighborhood: "
+    //             + "<strong>"
+    //             + feature.properties.Analysis_Neighborhood
+    //             + "</strong>"
+    //             + "<br>"
+    //             + "Existing Use: "
+    //             + "<strong>"
+    //             + feature.properties.Use_Code
+    //             + "</strong>"
+    //             + "<br>"
+    //             + "Land Value: "
+    //             + "<strong>"
+    //             + feature.properties.Ass_Land_Val
+    //             + "</strong>")
+    //          }
+    //         }).addTo(map);
+    //         layerMappedPolygons.eachLayer(eachFeatureFunction);
+    //       })
+    //     });
+
+// Potential parcels not in pipeline
   var firstSymbolId2;
+
+
   for (var i = 0; i < layers.length; i++) {
     if (layers[i].type === 'symbol') {
       firstSymbolId2 = layers[i].id;
@@ -339,7 +416,7 @@ map.on('click', 'Site Boundary', function(e) {
 
   map.addLayer({
       'id': 'Parcels not in pipeline',
-      'type': 'line',
+      'type': 'fill',
       'source': {
             'type': 'geojson',
             'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/20191220_SOMA_NOPIPE_13-19_ASSR_JOINED_N1.geojson'
@@ -356,8 +433,9 @@ map.on('click', 'Site Boundary', function(e) {
           // '#5DADE2',
           // 'fill-opacity': 0.05,
 
-          'line-color': '#FBB242',
-          'line-width': 1.2
+          'fill-color': '#FBB242',
+          'fill-opacity': 0.4
+          // 'line-width': 1.2
       },
   },
   firstSymbolId2);
@@ -398,6 +476,69 @@ map.on('click', 'Site Boundary', function(e) {
         + "</strong>")
       .addTo(map);
   });
+
+
+var MinArea = 0;
+var MaxArea = 0;
+
+//filtered result:
+$("#note").click(function(){
+  MinArea = $("#MinArea").val();
+  MaxArea = $("#MaxArea").val();
+  // var Zoning = $("#Zoning").val();
+  // var MinLandVal = $("#MinLandVal").val();
+  // var MaxLandVal = $("#MaxLandVal").val();
+  // var DistanceToTransit = $("#TransitDist").val();
+  // var DistanceToPark = $("#ParkDist").val();
+
+  console.log(MinArea);
+  console.log(MaxArea);
+  // console.log(Zoning);
+  // console.log(MinLandVal);
+  // console.log(MaxLandVal);
+});
+
+$("#find").click(function(){
+  console.log(MinArea);
+  // map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', $('#MinArea').val()]);
+  map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', 10000]);
+})
+
+
+
+var eachFeatureFunction = function(layer) {
+
+  layer.on('click', function (event) {
+    console.log(layer.feature.properties);
+         //ZOOM TO THE SELECTED MUNICIPALITY
+         map.fitBounds(layer.getBounds(),{
+                    padding: [80,80]
+                  });
+         // order = order + 1;
+         // console.log(order);
+
+       //PUSH INTO THE LAYER SELECTION GROUP for COMPARING
+       // layerselected.push(layer);
+       // console.log(layerselected);
+
+        //HIGHLIGHT THE MAP CLICKED
+
+        layerMappedPolygons.setStyle(fadeout);
+
+        layer.setStyle(highlight);
+
+ }
+)};
+
+ var fadeout = {
+   'opacity': 0.01,
+ };
+
+ var highlight = {
+   'color':'#416FEA',
+   'opacity': 0.2,
+ };
+
 
 
 
