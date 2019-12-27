@@ -111,7 +111,7 @@ var toggleableLayerIds =
     '',
     // 'Pipeline Dataset',
     'Parcels in Development Pipeline',
-    // '2019 Q2 Development Pipeline',
+    '2019 Q1Q2 Development Pipeline',
     'Parcels not in pipeline',
     '',
 
@@ -282,70 +282,124 @@ map.on('click', 'Site Boundary', function(e) {
 
 // 2019 Q2 dev pipeline parcels
 // https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson
-// for (var i = 0; i < layers.length; i++) {
-//   if (layers[i].type === 'symbol') {
-//     firstSymbolId15 = layers[i].id;
-//     break;
-//     }
-//   }
-// map.addLayer({
-//     'id': '2019 Q2 Development Pipeline',
-//     'type': 'circle',
-//     'source': {
+
+// create slider for parcels properties
+var slider = document.getElementById('slider');
+var sliderValue = document.getElementById('slider-value');
+
+// map.on('load', function() {
+// 		map.addLayer({
+//         'id': 'scores',
+//         'type': 'circle',
+//         'source': {
 //           'type': 'geojson',
-//           'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/SF%20Development%20Pipeline%202019%20Q2.geojson'
-//     },
+//           'data': 'https://rawgit.com/wboykinm/be013c300ee9a6e0cea2897a9de56fb3/raw/72319ef9a549634360cc6b6186fc81357fe8385f/chicago.geojson'
+//         },
+//         'paint': {
+//             'circle-radius': [
+//                 'step',
+//                 ['get', 'value'],
+//                 6, 0.7,
+//                 16
+//             ],
+//             'circle-color': [
+//                 'step',
+//                 ['get', 'value'],
+//                 '#fff', 0.7,
+//                 '#B26BFB'
+//             ]
+//         }
+//     });
 //
-//     'layout': {
-//         'visibility': 'none'
-//     },
-//     'paint': {
-//       'circle-radius': 3,
-//       'circle-color': '#76D7C4',
-//       // 'fill-opacity': 0.05,
-//       // 'opacity': 0.5,
-//     },
-// }, firstSymbolId15);
-//
-// //add popup to the model 1 prediction parcels
-// map.on('click', '2019 Q2 Development Pipeline', function(e) {
-//   new mapboxgl.Popup()
-//     .setLngLat(e.lngLat)
-//     .setHTML(
-//       "<strong>2012 Q1</strong>"
-//       + "<br>"
-//       + "<br>"
-//       + "Block-lot number: "
-//       + "<strong>"
-//       + e.features[0].properties.block_lot
-//       + "</strong>"
-//       + "<br>"
-//       + "Address: "
-//       + "<strong>"
-//       + e.features[0].properties.location_1_address
-//       + "</strong>"
-//       + "<br>"
-//       + "Zoning: "
-//       + "<strong>"
-//       + e.features[0].properties.zoning
-//       + "</strong>"
-//       + "<br>"
-//       + "Land Use: "
-//       + "<strong>"
-//       + e.features[0].properties.landuse
-//       + "</strong>"
-//       + "<br>"
-//       + "Project Date: "
-//       + "<strong>"
-//       + e.features[0].properties.project_date.substr(0,10)
-//       + "</strong>"
-//       + "<br>"
-//       + "Height Limit: "
-//       + "<strong>"
-//       + e.features[0].properties.heightlimit
-//       + "</strong>")
-//     .addTo(map);
+//     slider.addEventListener('input', function(e) {
+//         map.setPaintProperty('scores', 'circle-color', [ 'step', ['get', 'value'], '#fff', parseFloat(e.target.value, 1), '#B26BFB' ]);
+//         map.setPaintProperty('scores', 'circle-radius', [ 'step', ['get', 'value'], 6, parseFloat(e.target.value, 1), 16 ]);
+//         sliderValue.textContent = e.target.value;
+//     });
 // });
+
+
+var firstSymbolI5;
+for (var i = 0; i < layers.length; i++) {
+  if (layers[i].type === 'symbol') {
+    firstSymbolId15 = layers[i].id;
+    break;
+    }
+  }
+map.addLayer({
+    'id': '2019 Q1Q2 Development Pipeline',
+    'type': 'circle',
+    'source': {
+          'type': 'geojson',
+          'data': 'https://raw.githubusercontent.com/wenhaowuuu/site_susceptibility/master/layer_data/2019_Q1Q2_MERGE.geojson'
+    },
+
+    'layout': {
+        'visibility': 'none'
+    },
+    'paint': {
+
+      //testing the circle radius slider
+      // 'circle-radius': [
+      //           'step',
+      //           ['get', 'supedist'],
+      //           6, 0.7,
+      //           16
+      //       ],
+      // 'circle-color': [
+      //           'step',
+      //           ['get', 'supedist'],
+      //           '#fff', 0.7,
+      //           '#B26BFB'
+      //       ]
+
+      'circle-radius': 3,
+      'circle-color': '#76D7C4',
+
+    },
+}, firstSymbolId15);
+
+// slider.addEventListener('input', function(e) {
+//     map.setPaintProperty('2019 Q1Q2 Development Pipeline', 'circle-color', [ 'step', ['get', 'supedist'], '#fff', parseFloat(e.target.supedist, 1), '#B26BFB' ]);
+//     map.setPaintProperty('2019 Q1Q2 Development Pipeline', 'circle-radius', [ 'step', ['get', 'supedist'], 6, parseFloat(e.target.supedist, 1), 16 ]);
+//     sliderValue.textContent = e.target.value;
+// });
+
+
+//add popup to the model 1 prediction parcels
+map.on('click', '2019 Q1Q2 Development Pipeline', function(e) {
+  new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(
+      "<strong>2012 Q1</strong>"
+      + "<br>"
+      + "<br>"
+      + "Block-lot number: "
+      + "<strong>"
+      + e.features[0].properties.blklot
+      + "</strong>"
+      + "<br>"
+      + "Address: "
+      + "<strong>"
+      + e.features[0].properties.nameaddr
+      + "</strong>"
+      + "<br>"
+      // + "Zoning: "
+      // + "<strong>"
+      // + e.features[0].properties.zoning
+      // + "</strong>"
+      // + "<br>"
+      + "Land Use: "
+      + "<strong>"
+      + e.features[0].properties.project_type
+      + "</strong>"
+      + "<br>"
+      + "Project Year: "
+      + "<strong>"
+      + e.features[0].properties.year
+      + "</strong>")
+    .addTo(map);
+});
 
 
   //show the not in pipeline parcels:
@@ -404,7 +458,44 @@ map.on('click', 'Site Boundary', function(e) {
     //     });
 
 // Potential parcels not in pipeline
+
   var firstSymbolId2;
+
+// // create slider for parcels properties
+// var slider = document.getElementById('slider');
+// var sliderValue = document.getElementById('slider-value');
+
+// map.on('load', function() {
+// 		// map.addLayer({
+//     //     'id': 'scores',
+//     //     'type': 'circle',
+//     //     'source': {
+//     //       'type': 'geojson',
+//     //       'data': 'https://rawgit.com/wboykinm/be013c300ee9a6e0cea2897a9de56fb3/raw/72319ef9a549634360cc6b6186fc81357fe8385f/chicago.geojson'
+//     //     },
+//     //     'paint': {
+//     //         'circle-radius': [
+//     //             'step',
+//     //             ['get', 'value'],
+//     //             6, 0.7,
+//     //             16
+//     //         ],
+//     //         'circle-color': [
+//     //             'step',
+//     //             ['get', 'value'],
+//     //             '#fff', 0.7,
+//     //             '#B26BFB'
+//     //         ]
+//     //     }
+//     // });
+//
+//     // slider.addEventListener('input', function(e) {
+//     //     map.setPaintProperty('Parcels not in pipeline', 'fill-color', [ 'step', ['get', 'Lot_Area'], '#fff', parseFloat(e.target.Lot_Area, 1), '#B26BFB' ]);
+//     //     map.setPaintProperty('Parcels not in pipeline', 'fill-opacity', [ 'step', ['get', 'Lot_Area'], 6, parseFloat(e.target.Lot_Area, 1), 1 ]);
+//     //     sliderValue.textContent = e.target.Lot_Area;
+//     // });
+// });
+
 
 
   for (var i = 0; i < layers.length; i++) {
@@ -480,14 +571,19 @@ map.on('click', 'Site Boundary', function(e) {
 
 var MinArea = 0;
 var MaxArea = 0;
+var MinLandVal = 0;
+var MaxLandVal = 0;
+var DistanceToTransit = 0;
+var DistanceToPark = 0;
+
 
 //filtered result:
 $("#note").click(function(){
   MinArea = $("#MinArea").val();
   MaxArea = $("#MaxArea").val();
   // var Zoning = $("#Zoning").val();
-  // var MinLandVal = $("#MinLandVal").val();
-  // var MaxLandVal = $("#MaxLandVal").val();
+  MinLandVal = $("#MinLandVal").val();
+  MaxLandVal = $("#MaxLandVal").val();
   // var DistanceToTransit = $("#TransitDist").val();
   // var DistanceToPark = $("#ParkDist").val();
 
@@ -500,8 +596,17 @@ $("#note").click(function(){
 
 $("#find").click(function(){
   console.log(MinArea);
+  // console.log(["get", "Lot_Area"]);
   // map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', $('#MinArea').val()]);
-  map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', 10000]);
+
+  // if (MinArea <= 10000){
+  //   filter = []
+  // }
+  // var filter = ["all",['>', 'Lot_Area', 10000],['<', 'Lot_Area', 200000]];
+
+  // var filter = ["all",['>', 'Lot_Area', ["get", MinArea]]];
+
+  map.setFilter('Parcels not in pipeline',["all",['>', 'Lot_Area', 2000],['<', 'Lot_Area', 15000],['>', 'Ass_Land_Val', 0],['<', 'Ass_Land_Val', 1000000]]);
 })
 
 
