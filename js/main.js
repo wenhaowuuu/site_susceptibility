@@ -596,7 +596,9 @@ $("#note").click(function(){
 
 $("#find").click(function(){
   console.log(MinArea);
-  var MinArea = 2000;
+  var MinArea = $("#MinArea").val();
+  console.log(MinArea);
+  // var MinArea = 2000;
   // console.log(["get", "Lot_Area"]);
   // map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', $('#MinArea').val()]);
 
