@@ -596,6 +596,7 @@ $("#note").click(function(){
 
 $("#find").click(function(){
   console.log(MinArea);
+  var MinArea = 2000;
   // console.log(["get", "Lot_Area"]);
   // map.setFilter('Parcels not in pipeline',['>', 'Lot_Area', $('#MinArea').val()]);
 
@@ -605,8 +606,8 @@ $("#find").click(function(){
   // var filter = ["all",['>', 'Lot_Area', 10000],['<', 'Lot_Area', 200000]];
 
   // var filter = ["all",['>', 'Lot_Area', ["get", MinArea]]];
-
-  map.setFilter('Parcels not in pipeline',["all",['>', 'Lot_Area', 2000],['<', 'Lot_Area', 15000],['>', 'Ass_Land_Val', 0],['<', 'Ass_Land_Val', 1000000]]);
+  map.setFilter('Parcels not in pipeline',["all",['>', 'Lot_Area', MinArea]);
+//   map.setFilter('Parcels not in pipeline',["all",['>', 'Lot_Area', 2000],['<', 'Lot_Area', 15000],['>', 'Ass_Land_Val', 0],['<', 'Ass_Land_Val', 1000000]]);
 })
 
 
